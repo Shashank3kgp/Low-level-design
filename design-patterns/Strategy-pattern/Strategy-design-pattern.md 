@@ -1,0 +1,95 @@
+Strategy Design pattern:
+
+Problem:-
+When the children of a parent class have a different implementation of a parent method, but in that children some have the same implementation of that specific method, code duplication happens
+
+Why this pattern exists:
+To remove the code duplication in these kind of scenarios we use Strategy design pattern 
+
+Real world example:
+Vehicle -> drive method 
+offroad, sports, goods - children of the vehicle
+offroad, sports - need one kind of implementation of drive method
+goods - needs one kind of implementation of drive method 
+
+To solve this we use this pattern:
+We create a drive strategy class, which has different ways of implementing the drive function, then use that inside the implementation of the vehicle class 
+
+Class diagram:
+
+
+Implementation:
+
+```java
+interface DriveStrategy {
+    void drive();
+}
+
+class OffRoadDriveStrategy implements DriveStrategy {
+    public void drive() {
+        System.out.println("Driving off-road");
+    }
+}
+
+class SportsDriveStrategy implements DriveStrategy {
+    public void drive() {
+        System.out.println("Driving fast");
+    }
+}
+
+class GoodsDriveStrategy implements DriveStrategy {
+    public void drive() {
+        System.out.println("Driving carefully with goods");
+    }
+}
+
+class Vehicle {
+    private DriveStrategy driveStrategy;
+
+    public Vehicle(DriveStrategy driveStrategy) {
+        this.driveStrategy = driveStrategy;
+    }
+
+    public void setDriveStrategy(DriveStrategy driveStrategy) {
+        this.driveStrategy = driveStrategy;
+    }
+
+    public void drive() {
+        driveStrategy.drive();
+    }
+}
+
+class OffRoadVehicle extends Vehicle {
+    public OffRoadVehicle() {
+        super(new OffRoadDriveStrategy());
+    }
+}
+
+class SportsVehicle extends Vehicle {
+    public SportsVehicle() {
+        super(new SportsDriveStrategy());
+    }
+}
+
+class GoodsVehicle extends Vehicle {
+    public GoodsVehicle() {
+        super(new GoodsDriveStrategy());
+    }
+}
+```
+
+How it works:
+- The vehicle does not decide how to drive itself.
+- Instead, it gets a strategy object that knows how to drive.
+- This avoids duplicate code and makes behavior easy to change.
+
+Example usage:
+
+```java
+Vehicle offRoad = new OffRoadVehicle();
+offRoad.drive();
+
+Vehicle sports = new SportsVehicle();
+sports.drive();
+```
+
