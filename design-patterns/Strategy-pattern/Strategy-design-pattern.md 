@@ -15,81 +15,22 @@ goods - needs one kind of implementation of drive method
 To solve this we use this pattern:
 We create a drive strategy class, which has different ways of implementing the drive function, then use that inside the implementation of the vehicle class 
 
-Class diagram:
+Class Diagram:
+- in the readme.md file
 
+Advantages:
+- removes code duplication 
+- code is easily extensible and scalable 
+- can change the strategy at run time 
 
-Implementation:
+Disadvantages:
+- Increases the number of classes ( many more of strategy )
+- can be a overkill for simple problems ( if there are only one or two behaviours this is just a overkill in that case )
 
-```java
-interface DriveStrategy {
-    void drive();
-}
+When not to use it:
+- when the behaviour of the child or the objects are not gonna change and the behaviours are not expected to grow, then adding this would simply increase complexity 
+- if the extra abstraction is creating complexity rather than real benifit, we should not be using this pattern 
 
-class OffRoadDriveStrategy implements DriveStrategy {
-    public void drive() {
-        System.out.println("Driving off-road");
-    }
-}
-
-class SportsDriveStrategy implements DriveStrategy {
-    public void drive() {
-        System.out.println("Driving fast");
-    }
-}
-
-class GoodsDriveStrategy implements DriveStrategy {
-    public void drive() {
-        System.out.println("Driving carefully with goods");
-    }
-}
-
-class Vehicle {
-    private DriveStrategy driveStrategy;
-
-    public Vehicle(DriveStrategy driveStrategy) {
-        this.driveStrategy = driveStrategy;
-    }
-
-    public void setDriveStrategy(DriveStrategy driveStrategy) {
-        this.driveStrategy = driveStrategy;
-    }
-
-    public void drive() {
-        driveStrategy.drive();
-    }
-}
-
-class OffRoadVehicle extends Vehicle {
-    public OffRoadVehicle() {
-        super(new OffRoadDriveStrategy());
-    }
-}
-
-class SportsVehicle extends Vehicle {
-    public SportsVehicle() {
-        super(new SportsDriveStrategy());
-    }
-}
-
-class GoodsVehicle extends Vehicle {
-    public GoodsVehicle() {
-        super(new GoodsDriveStrategy());
-    }
-}
-```
-
-How it works:
-- The vehicle does not decide how to drive itself.
-- Instead, it gets a strategy object that knows how to drive.
-- This avoids duplicate code and makes behavior easy to change.
-
-Example usage:
-
-```java
-Vehicle offRoad = new OffRoadVehicle();
-offRoad.drive();
-
-Vehicle sports = new SportsVehicle();
-sports.drive();
-```
-
+Related Patterns:
+State Pattern 
+Decorator Pattern 
