@@ -26,7 +26,7 @@ class UserQueryBuilder {
 
     public UserQueryBuilder where(String field, Object value) {
         filters.put(field, value);
-        return this;
+        return this;      
     }
 
     public UserQueryBuilder orderBy(String column) {
