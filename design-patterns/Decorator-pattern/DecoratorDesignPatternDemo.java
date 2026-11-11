@@ -1,4 +1,3 @@
-// Beginner-friendly example of the Decorator Design Pattern in Java
 
 interface Beverage {
     String getDescription();
